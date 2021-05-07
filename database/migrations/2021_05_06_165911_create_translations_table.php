@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTranslationTable extends Migration
+class CreateTranslationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateTranslationTable extends Migration
      */
     public function up()
     {
-        Schema::table('translations', function (Blueprint $table) {
+        Schema::create('translations', function (Blueprint $table) {
             $table->id();
             $table->string('table');
             $table->integer('row');
             $table->string('column');
-            $table->string('value');
-            $table->timestamp('deleted_at');
+            $table->text('value');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
@@ -31,8 +31,6 @@ class CreateTranslationTable extends Migration
      */
     public function down()
     {
-        Schema::table('translations', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('translations');
     }
 }
