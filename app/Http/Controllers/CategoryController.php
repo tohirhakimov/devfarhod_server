@@ -20,7 +20,7 @@ class СategoryController extends Controller
             Category::paginate(10)
         );
     }
-
+ 
 
     /**
      * Store a newly created resource in storage.
