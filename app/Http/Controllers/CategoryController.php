@@ -63,7 +63,7 @@ class СategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Сategory $Сategory, $id)
-    {
+    { 
         $validate = Validator::make($request->toArray(), [
             'name' => 'required',
             'slug' => 'required',
