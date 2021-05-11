@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Сategory;
 use Illuminate\Http\Request;
-use App\Http\Resources\PostResource;
+use App\Http\Resources\СategoryResource;
 use Illuminate\Support\Facades\Validator;
 
-class PostController extends Controller
+class СategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,18 +16,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        return response(PostResource::collection(Post::all()), 200);
+        return CategoryResourge::collection(
+            Category::paginate(10)
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -38,19 +31,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->toArray(), [
-            'title' => 'required',
+            'name' => 'required',
             'slug' => 'required',
-            'body' => 'required',
-            'excerpt' => 'required',
-            'status' => 'required',
-            'user_id' => 'required'
+            'perent_id' => 'required',
         ]);
 
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
 
-        return response(new PostResource(Post::create($validate->validate())), 201); // 201 Created
+        return response(new СategoryResource(Сategory::create($validate->validate())), 201); // 201 Created
     }
 
     /**
@@ -59,21 +49,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post, $id)
+    public function show(Сategory $Сategory, $id)
     {
-        return response(new PostResource($post), 200);
+        return response(new СategoryResource($Сategory), 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -82,23 +62,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post, $id)
+    public function update(Request $request, Сategory $Сategory, $id)
     {
         $validate = Validator::make($request->toArray(), [
-            'title' => 'required',
+            'name' => 'required',
             'slug' => 'required',
-            'body' => 'required',
-            'excerpt' => 'required',
-            'status' => 'required',
-            'user_id' => 'required'
+            'perent_id' => 'required',
         ]);
 
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
 
-        $post->update($validate->validate());
-        return response(new PostResource($post), 201);
+        $Сategory->update($validate->validate());
+        return response(new СategoryResource($Сategory), 201);
     }
 
     /**
@@ -107,9 +84,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, $id)
+    public function destroy(Сategory $Сategory, $id)
     {
-        $post->delete();
+        $Сategory->delete();
 
         return response(null, 204);
     }

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TranslationResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -27,7 +27,7 @@ class TranslationResource extends JsonResource
     {
         return [
             'version' => '1.0.1',
-            'author' => 'Translation'
+            'author' => 'Category'
         ];
     }
 }
