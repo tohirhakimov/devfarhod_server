@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TranslationResource;
-use App\Models\Translation;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Models\Translation;
 
 class TranslationController extends Controller
 {
@@ -15,18 +16,7 @@ class TranslationController extends Controller
      */
     public function index()
     {
-        $translations = Translation::paginate(10);
-        return TranslationResource::collection($translations);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response(TranslationResource::collection(Translation::all()), 200);
     }
 
     /**
@@ -37,14 +27,18 @@ class TranslationController extends Controller
      */
     public function store(Request $request)
     {
-        $translation = new Translation();
-        $translation->table = $request->table;
-        $translation->row = $request->row;
-        $translation->column = $request->column;
-        $translation->value = $request->value;
-        if ($translation->save()) {
-            return new TranslationResource($translation);
+        $validate = Validator::make($request->toArray(), [
+            'table' => 'required',
+            'row' => 'required',
+            'column' => 'required',
+            'value' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return response($validate->errors(), 400);
         }
+
+        return response(new TranslationResource(Translation::create($validate->validate())), 201);
     }
 
     /**
@@ -53,21 +47,9 @@ class TranslationController extends Controller
      * @param  \App\Models\Translation  $translation
      * @return \Illuminate\Http\Response
      */
-    public function show(Translation $translation, $id)
+    public function show(Translation $translation)
     {
-        $translation = Translation::findOrFail($id);
-        return new TranslationResource($translation);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Translation  $translation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Translation $translation)
-    {
-        //
+        return response(new TranslationResource($translation), 200);
     }
 
     /**
@@ -77,16 +59,23 @@ class TranslationController extends Controller
      * @param  \App\Models\Translation  $translation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Translation $translation, $id)
+    public function update(Request $request, Translation $translation)
     {
-        $translation = Translation::findOrFail($id);
-        $translation->table = $request->table;
-        $translation->row = $request->row;
-        $translation->column = $request->column;
-        $translation->value = $request->value;
-        if ($translation->save()) {
-            return new TranslationResource($translation);
+
+        $validate = Validator::make($request->toArray(), [
+            'table' => 'required',
+            'row' => 'required',
+            'column' => 'required',
+            'value' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return response($validate->errors(), 400);
         }
+
+        return response(new TranslationResource(
+            $translation->update($validate->validate())
+        ), 200);
     }
 
     /**
@@ -95,11 +84,10 @@ class TranslationController extends Controller
      * @param  \App\Models\Translation  $translation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Translation $translation, $id)
+    public function destroy(Translation $translation)
     {
-        $translation = Translation::findOrFail($id);
-        if ($translation->delete()) {
-            return new TranslationResource($translation);
-        }
+        $translation->delete();
+
+        return response(null, 204);
     }
 }

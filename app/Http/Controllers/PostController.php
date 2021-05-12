@@ -20,16 +20,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -43,14 +33,14 @@ class PostController extends Controller
             'body' => 'required',
             'excerpt' => 'required',
             'status' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required|exist:users'
         ]);
 
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
 
-        return response(new PostResource(Post::create($validate->validate())), 201); // 201 Created
+        return response(new PostResource(Post::create($validate->validate())), 201);
     }
 
     /**
@@ -59,20 +49,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post, $id)
+    public function show(Post $post)
     {
         return response(new PostResource($post), 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -82,7 +61,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post, $id)
+    public function update(Request $request, Post $post)
     {
         $validate = Validator::make($request->toArray(), [
             'title' => 'required',
@@ -90,15 +69,16 @@ class PostController extends Controller
             'body' => 'required',
             'excerpt' => 'required',
             'status' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required|exist:users'
         ]);
 
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
 
-        $post->update($validate->validate());
-        return response(new PostResource($post), 201);
+        return response(new PostResource(
+            $post->update($validate->validate())
+        ), 201);
     }
 
     /**

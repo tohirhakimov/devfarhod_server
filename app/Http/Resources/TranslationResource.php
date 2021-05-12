@@ -14,15 +14,14 @@ class TranslationResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
         return [
-            'id' => $this->id,
             'table' => $this->table,
             'row' => $this->row,
             'column' => $this->column,
             'value' => $this->value,
         ];
     }
+
     public function with($request)
     {
         return [
