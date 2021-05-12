@@ -12,3 +12,4 @@ Route::apiResources([
     'users' => UserController::class,
     'posts' => PostController::class
 ]);
+

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PostTag;
-use Illuminate\Http\Request;
-use App\Http\Resources\PostTagResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\PostTagResource;
+use Illuminate\Http\Request;
+use App\Models\PostTag;
 
 class PostTagController extends Controller
 {
@@ -35,7 +35,7 @@ class PostTagController extends Controller
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
-        return response(new PostTagResource(PostTag::create($validate->validate())), 201); // 201 Created
+        return response(new PostTagResource(PostTag::create($validate->validate())), 201);
     }
 
     /**
@@ -47,17 +47,6 @@ class PostTagController extends Controller
     public function show(PostTag $postTag)
     {
         return response(new PostTagResource($postTag), 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PostTag  $postTag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PostTag $postTag)
-    {
-        //
     }
 
     /**
@@ -77,7 +66,7 @@ class PostTagController extends Controller
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
-        return response(new PostTagResource(PostTag::create($validate->validate())), 201); // 201 Created
+        return response(new PostTagResource($postTag->update($validate->validate())), 201);
     }
 
     /**

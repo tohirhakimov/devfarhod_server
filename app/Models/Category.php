@@ -5,9 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Translation extends Model
+class Category extends Model
 {
     use HasFactory;
-    protected $table = "translations";
-    protected $fillable = ['table', 'row', 'column', 'value'];
+    protected $Category = "category";
+    protected $fillable = ['name', 'slug', 'parent_id'];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

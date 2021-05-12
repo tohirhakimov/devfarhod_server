@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\UserResource;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -36,7 +36,7 @@ class UserController extends Controller
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
-        return response(new UserResource(User::create($validate->validate())), 201); // 201 Created
+        return response(new UserResource(User::create($validate->validate())), 201);
     }
 
     /**
@@ -45,7 +45,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user, $id)
+    public function show(User $user)
     {
         return response(new UserResource($user), 200);
     }
@@ -57,21 +57,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user, $id)
+    public function update(Request $request, User $user)
     {
         $validate = Validator::make($request->toArray(), [
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'avata' => 'required'
+            'avatar' => 'required'
         ]);
 
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
-
-        $user->update($validate->validate());
-        return response(new UserResource($user), 201);
+        return response(new UserResource($user->update($validate->validate())), 201);
     }
 
     /**
@@ -80,7 +78,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user, $id)
+    public function destroy(User $user)
     {
         $user->delete();
 

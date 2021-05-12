@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use Illuminate\Http\Request;
-use App\Http\Resources\PostResource;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Models\Category;
 
-class PostController extends Controller
+class СategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return response(PostResource::collection(Post::all()), 200);
+        return response(CategoryResource::collection(Category::all()), 200);
     }
 
     /**
@@ -28,19 +28,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->toArray(), [
-            'title' => 'required',
+            'name' => 'required',
             'slug' => 'required',
-            'body' => 'required',
-            'excerpt' => 'required',
-            'status' => 'required',
-            'user_id' => 'required|exist:users'
+            'perent_id' => 'required|exists:categories',
         ]);
 
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
 
-        return response(new PostResource(Post::create($validate->validate())), 201);
+        return response(new CategoryResource(Category::create($validate->validate())), 201);
     }
 
     /**
@@ -49,9 +46,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Category $category)
     {
-        return response(new PostResource($post), 200);
+        return response(new CategoryResource($category), 200);
     }
 
     /**
@@ -61,24 +58,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Category $category)
     {
         $validate = Validator::make($request->toArray(), [
-            'title' => 'required',
+            'name' => 'required',
             'slug' => 'required',
-            'body' => 'required',
-            'excerpt' => 'required',
-            'status' => 'required',
-            'user_id' => 'required|exist:users'
+            'perent_id' => 'required|exists:categories',
         ]);
 
         if ($validate->fails()) {
             return response($validate->errors(), 400);
         }
 
-        return response(new PostResource(
-            $post->update($validate->validate())
-        ), 201);
+        $category->update($validate->validate());
+        return response(new CategoryResource($category), 201);
     }
 
     /**
@@ -87,9 +80,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, $id)
+    public function destroy(Category $category)
     {
-        $post->delete();
+        $category->delete();
 
         return response(null, 204);
     }
