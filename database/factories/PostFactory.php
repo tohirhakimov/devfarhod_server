@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
 {
@@ -22,14 +23,14 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence();
         return [
-            'title' => $this->faker->text(50),
-            'slug' => $this->faker->text(30),
-            'body' => $this->faker->text(300),
-            'excerpt' => $this->faker->text(200),
+            'title' => $title,
+            'slug' => Str::slug($title),
+            'body' => $this->faker->sentences(20, true),
+            'excerpt' => $this->faker->sentences(2, true),
             'status' => $this->faker->randomElement(['published', 'pending', 'draft']),
-            'user_id' => $this->faker->randomElement(User::pluck('id')->toArray()),
-            // 'user_id' => User::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }
