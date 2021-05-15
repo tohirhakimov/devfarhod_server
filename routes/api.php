@@ -10,6 +10,5 @@ Route::apiResources([
     'translations' => TranslationController::class,
     'categories' => CategoryController::class,
     'users' => UserController::class,
-    'posts' => PostController::class
+    'posts' => PostController::class,
 ]);
-
