@@ -16,12 +16,8 @@ class CategoryResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-<<<<<<< HEAD:app/Http/Resources/PostResource.php
-            'title' => $this->title,
-=======
             'id' => $this->id,
             'name' => $this->name,
->>>>>>> origin/Create-CRUD-for-categories-table:app/Http/Resources/CategoryResource.php
             'slug' => $this->slug,
             'parent_id' => $this->parent_id,
         ];
