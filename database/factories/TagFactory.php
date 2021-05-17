@@ -19,7 +19,7 @@ class TagFactory extends Factory
     /**
      * Define the model's default state.
      * 
-     * gg
+     * 
      *
      * @return array
      */
