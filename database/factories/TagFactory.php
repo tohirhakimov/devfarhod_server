@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Faker\Generator as Faker;
+use App\Models\Tag;
 
 class TagFactory extends Factory
 {
@@ -18,19 +17,19 @@ class TagFactory extends Factory
 
     /**
      * Define the model's default state.
-     * 
-     * 
+     *
+     *
      *
      * @return array
      */
     public function definition()
-
     {
-        $factory->define(Tag::class, function (Faker $faker)
+        $name = $this->faker->word();
+        $tagCount = Tag::get()->count();
         return [
-            'name' => $this->faker->name(),
-            'slug' => Str::random(40),
-            'parent_id' => rand(1, App\Models\Tag::count()),
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'parent_id' => ($tagCount > 1) ? rand(1, $tagCount) : null,
         ];
     }
 }

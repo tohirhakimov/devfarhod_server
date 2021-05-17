@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
-    protected $table = "tags";
-    protected $fillable = ['name', 'slug', 'parent_id'];
+    protected $fillable = [
+        'name',
+        'slug',
+        'parent_id'
+    ];
 
-    public function tags() 
+    public function parent()
     {
         return $this->belongsTo(Tag::class);
     }
