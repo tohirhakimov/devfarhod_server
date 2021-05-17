@@ -12,13 +12,19 @@ class PostCategoryResource extends JsonResource
      * @param  \Illuminate\Http\Request  $postcategory
      * @return array
      */
-    public function toArray($postcategory)
+    public function toArray($request)
     {
         return [
             'post_id' => $this->post_id,
-            'gategory_id' => $this->gategory_id,
-
-
+            'category_id' => $this->category_id
+        ];
+    }
+    
+    public function with($request)
+    {
+        return [
+            'version' => '1.0.2',
+            'author' => 'PostCategory'
         ];
     }
 }

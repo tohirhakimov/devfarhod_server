@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PostCategoryResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\CategoryResource;
+use App\Models\PostCategory;
 use Illuminate\Http\Request;
-use App\Models\postCategory;
+use App\Models\Category;
 
 class PostCategoryController extends Controller
 {
@@ -28,8 +30,8 @@ class PostCategoryController extends Controller
     public function store(Request $postcategory)
     {
         $validate = Validator::make($postcategory->toArray(), [
-            'post_id' => 'required|exists:categories',
-            'gategory_id' => 'required|exists:categories',
+            'post_id' => 'required|exists:posts',
+            'category_id' => 'required|exists:categories',
         ]);
 
         if ($validate->fails()) {
@@ -57,11 +59,11 @@ class PostCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $postcategory, Category $categorys)
+    public function update(Request $request, Category $category)
     {
-        $validate = Validator::make($postcategory->toArray(), [
+        $validate = Validator::make($request->toArray(), [
             'name' => 'required',
-            'slug' => 'required',
+            'slug' => 'required|unique:categories',
             'perent_id' => 'required|exists:categories',
         ]);
 
@@ -69,8 +71,8 @@ class PostCategoryController extends Controller
             return response($validate->errors(), 400);
         }
 
-        $categorys->update($validate->validate());
-        return response(new CategoryResource($categorys), 201);
+        $category->update($validate->validate());
+        return response(new CategoryResource($category), 201);
     }
 
     /**
@@ -79,9 +81,9 @@ class PostCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $categorys)
+    public function destroy(Category $category)
     {
-        $categorys->delete();
+        $category->delete();
 
         return response(null, 204);
     }
