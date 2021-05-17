@@ -18,8 +18,6 @@ class PostTagResource extends JsonResource
             'id' => $this->id,
             'post_id' => $this->post_id,
             'tag_id' => $this->tag_id,
-
-
         ];
     }
 }
