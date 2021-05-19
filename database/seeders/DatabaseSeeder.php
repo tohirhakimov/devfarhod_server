@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Tag;
+// use App\Models\PostTag;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,5 +22,6 @@ class DatabaseSeeder extends Seeder
                 Tag::factory()->count(4)
             )->count(5)
         )->create();
+        // PostTag::factory(50)->create();
     }
 }
