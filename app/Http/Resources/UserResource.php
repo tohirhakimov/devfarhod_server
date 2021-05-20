@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'password' => $this->password,
             'avatar' => $this->avatar,
-        ]
+        ];
     }
     public function with($request)
     {
