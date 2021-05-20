@@ -5,7 +5,6 @@ use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\PostTagController;
 
 
 Route::apiResources([
@@ -13,6 +12,10 @@ Route::apiResources([
     'categories' => CategoryController::class,
     'users' => UserController::class,
     'posts' => PostController::class,
+<<<<<<< HEAD
     'postscategory' => PostCategoryController::class,
     'post_tags' => PostTagController::class
+=======
+    'postcategory' => PostCategoryController::class
+>>>>>>> main
 ]);
