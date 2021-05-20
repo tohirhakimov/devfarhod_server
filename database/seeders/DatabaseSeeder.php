@@ -19,13 +19,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(10)->has(
-             Post::factory()->has(
-                  Tag::factory()->count(4) 
-                    )->count(5) 
-                )->create();
+            Post::factory()->has(
+                Tag::factory()->count(4) 
+            )->count(5) 
+        )->create();
 
         Category::factory(30)->create();
         Translation::factory(20)->create();
-       
     }
 }
