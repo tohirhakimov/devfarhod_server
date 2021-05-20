@@ -16,8 +16,12 @@ class Post extends Model
         'user_id',
         'status'
     ];
-  
-    public function postCategory() {
-        return $this->belongsToMany(Post::class);
+
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'post_category');
+    }
+
+    public function tags() {
+        return $this->belongsToMany(Tag::class, 'post_tag');
     }
 }

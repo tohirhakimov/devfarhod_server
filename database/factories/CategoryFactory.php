@@ -22,11 +22,11 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
-        $names = $this->faker->word();
+        $name = $this->faker->word();
         $category = Category::get()->count();
         return [
-            'name'=> $names,
-            'slug'=>Str::slug($names),
+            'name'=> $name,
+            'slug'=> Str::slug($name),
             'parent_id' => ($category > 1) ? rand(1, $category) : null,
         ];
     }

@@ -23,11 +23,9 @@ class PostCategoryFactory extends Factory
      */
     public function definition()
     {
-        $post = Post::get()->count();
-        $category = Category::get()->count();
         return [
-            'post_id' => ($post > 1) ? rand(1, $post) : null,
-            'category_id' => ($category > 1) ? rand(1, $category) : null,
+            'post_id' => Post::factory(),
+            'category_id' => Category::factory(),
         ];
     }
 }
