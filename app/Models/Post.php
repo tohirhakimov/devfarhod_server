@@ -17,7 +17,11 @@ class Post extends Model
         'status'
     ];
 
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'post_category');
+    }
+
     public function tags() {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'post_tag');
     }
 }

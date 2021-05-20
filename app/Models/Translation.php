@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PostCategory extends Model
+class Translation extends Model
 {
     use HasFactory;
-    protected $Category = "postcategory";
-    protected $fillable = ['post_id', 'category_id'];
+    protected $translation = [
+        'table',
+        'row',
+        'column',
+        'value'
+    ];
 }
-

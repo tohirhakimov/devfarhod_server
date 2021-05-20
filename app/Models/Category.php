@@ -13,6 +13,14 @@ class Category extends Model
         'slug',
         'parent_id'
     ];
+
+    public function parent() {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function posts() {
+        return $this->belongsToMany(Post::class, 'post_category');
+    }
 }
 
 

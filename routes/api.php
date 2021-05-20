@@ -12,5 +12,10 @@ Route::apiResources([
     'categories' => CategoryController::class,
     'users' => UserController::class,
     'posts' => PostController::class,
+<<<<<<< HEAD
+    'postscategory' => PostCategoryController::class,
+    'post_tags' => PostTagController::class
+=======
     'postcategory' => PostCategoryController::class
+>>>>>>> main
 ]);
