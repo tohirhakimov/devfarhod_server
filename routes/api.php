@@ -6,16 +6,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 
-
 Route::apiResources([
     'translations' => TranslationController::class,
-    'categories' => CategoryController::class,
     'users' => UserController::class,
-    'posts' => PostController::class,
-<<<<<<< HEAD
-    'postscategory' => PostCategoryController::class,
-    'post_tags' => PostTagController::class
-=======
-    'postcategory' => PostCategoryController::class
->>>>>>> main
+    'posts' => PostController::class
 ]);
+
+Route::get('/', );
