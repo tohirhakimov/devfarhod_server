@@ -14,22 +14,21 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
         return [
-            'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
             'body' => $this->body,
             'excerpt' => $this->excerpt,
             'status' => $this->status,
-            'user_id' => $this->user_id,
+            'user' => new UserResource($this->user),
         ];
     }
+
     public function with($request)
     {
         return [
             'version' => '1.0.2',
-            'author' => 'Post'
+            'author' => 'Nodirbek Ergashev'
         ];
     }
 }

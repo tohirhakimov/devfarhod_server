@@ -20,30 +20,20 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
         $validate = Validator::make($request->toArray(), [
             'title' => 'required',
-            'slug' => 'required',
+            'slug' => 'required|unique:posts,slug',
             'body' => 'required',
             'excerpt' => 'required',
             'status' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required|exists:users,id'
         ]);
 
         if ($validate->fails()) {
@@ -59,21 +49,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post, $id)
+    public function show(Post $post)
     {
         return response(new PostResource($post), 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -82,15 +62,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post, $id)
+    public function update(Request $request, Post $post)
     {
         $validate = Validator::make($request->toArray(), [
             'title' => 'required',
-            'slug' => 'required',
+            'slug' => 'required|unique:posts,slug',
             'body' => 'required',
             'excerpt' => 'required',
             'status' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required|exists:users,id'
         ]);
 
         if ($validate->fails()) {
@@ -106,7 +86,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, $id)
+    public function destroy(Post $post)
     {
         $post->delete();
 

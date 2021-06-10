@@ -16,8 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return response(UserResource::collection(User::all()), 200);
+        return UserResource::collection(User::all())->response()->setStatusCode(20);
     }
+
     /**
      * Store a newly created resource in storage.
      *
