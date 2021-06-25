@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\UserController;
@@ -12,25 +13,38 @@ Route::apiResources([
     'translations' => TranslationController::class,
     'users' => UserController::class,
     'posts' => PostController::class
+
 ]);
 
-Route::get('/tags', function () {
-    return response()->json(Tag::all(), 200);
-});
+// Route::get('/tags', function () {
+//     return response()->json(Tag::all(), 200);
+// });
 
-Route::get('/tags/{tag}', function (Tag $tag) {
-    return response()->json($tag, 200);
-});
+// Route::get('/tags/{tag}', function (Tag $tag) {
+//     return response()->json($tag, 200);
+// });
 
-Route::post('/tags', function (Request $request) {
-    return response()->json(Tag::create($request->all()), 201);
-});
+// Route::post('/tags', function (Request $request) {
+//     return response()->json(Tag::create($request->all()), 201);
+// });
 
-Route::put('/tags/{tag}', function (Request $request, Tag $tag) {
-    return response()->json($tag->update($request->all()), 201);
-});
+// Route::put('/tags/{tag}', function (Request $request, Tag $tag) {
+//     return response()->json($tag->update($request->all()), 201);
+// });
 
-Route::delete('/tags/{tag}', function (Tag $tag) {
-    $tag->delete();
-    return response()->json(null, 204);
+// Route::delete('/tags/{tag}', function (Tag $tag) {
+//     $tag->delete();
+//     return response()->json(null, 204);
+// });
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::group(['moddleware' => ['auth:sanctum']], function () {
+    Route::apiResources([
+        'translations' => TranslationController::class,
+        'users' => UserController::class,
+        'posts' => PostController::class
+    ]);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
